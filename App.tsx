@@ -1,20 +1,41 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { darkTheme, lightTheme } from '@/utils/themes';
+import { NavigationContainer } from '@react-navigation/native';
+import { useColorScheme } from 'react-native';
+import { PaperProvider } from 'react-native-paper';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import SplashScreen from '@/views/SplashScreen';
+import TabController from '@/views/TabController';
+import GenerateScreen from '@/views/GenerateScreen';
+import * as MediaLibrary from 'expo-media-library';
+
+export type RootStackParamList = {
+  Splash: undefined;
+  Tabs: undefined;
+  Generate: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
+  const colorScheme = useColorScheme();
+  const paperTheme =
+    colorScheme === 'dark'
+      ? darkTheme
+      : lightTheme;
+
+
+  
+
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <PaperProvider theme={paperTheme}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Tabs" component={TabController} options={{ headerShown: false }} />
+          <Stack.Screen name="Generate" component={GenerateScreen} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
