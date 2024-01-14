@@ -68,7 +68,7 @@ async function tensor2img(tensor: tf.Tensor<tf.Rank>) {
     const jpegImageData = jpeg.encode(rawImageData, 100);
     const imgBase64 = tf.util.decodeString(jpegImageData.data, "base64")
     const salt = `${Date.now()}-${Math.floor(Math.random() * 10000)}`
-    const uri = FileSystem.documentDirectory + `tensor-${salt}.jpg`;
+    const uri = FileSystem.cacheDirectory + `tensor-${salt}.jpg`;
     await FileSystem.writeAsStringAsync(uri, imgBase64, {
         encoding: FileSystem.EncodingType.Base64,
     });

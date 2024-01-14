@@ -6,6 +6,8 @@ import Share from "@components/Share";
 import Footer from "@components/Footer";
 import { RootStackParamList } from "App";
 import { useTheme } from "react-native-paper";
+import * as FileSystem from 'expo-file-system';
+import { useEffect } from "react";
 
 type Props = {
     navigation: NativeStackNavigationProp<RootStackParamList, 'Tabs'>;
@@ -19,11 +21,18 @@ export default function HomeScreen({ navigation }: Props) {
             backgroundColor: theme.colors.background,
         },
     }
+    useEffect(() => {
+        const check = async () => {
+            const info =  await FileSystem.getInfoAsync(FileSystem.cacheDirectory || '');
+            console.log(info);
+        }
+        check();
+    }, [])
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <Banner />
-            <StylesHorizontal />
+            <Banner navigation={navigation} />
+            <StylesHorizontal navigation={navigation} />
             <Share />
             <Footer />
         </ScrollView>

@@ -1,8 +1,14 @@
-import { StyleSheet, View } from "react-native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "App";
+import { Pressable, StyleSheet, View } from "react-native";
 import { Card, Icon, Text, useTheme } from "react-native-paper";
 
+type Props = {
+    navigation: NativeStackNavigationProp<RootStackParamList, 'Tabs'>;
+}
 
-export default function Banner() {
+
+export default function Banner({navigation}: Props) {
     const theme = useTheme();
 
     const styles = StyleSheet.create({
@@ -56,7 +62,7 @@ export default function Banner() {
     })
 
     return (
-        <View style={styles.container}>
+        <Pressable style={styles.container} onPress={()=>navigation.navigate("Generate")}>
             <Text style={styles.text_title}><Icon source="party-popper" size={40} color={theme.colors.primary}   />Artify</Text>
             <Text style={styles.text}>With Artify, you can apply styles to you own photos! In just a few steps you can transform all your memories. </Text>
             <View style={styles.container_general}>
@@ -80,6 +86,6 @@ export default function Banner() {
                 </Card>
             </View>
 
-        </View>
+        </Pressable>
     )
 }

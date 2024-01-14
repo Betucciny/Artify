@@ -1,6 +1,8 @@
 import ModalStyle from "@components/ModalStyle";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { getRandomInt, sleep } from "@utils/functions";
 import { StyleItem, data_styles } from "@utils/styles";
+import { RootStackParamList } from "App";
 import { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { Card, Icon, Surface, Text, TouchableRipple, useTheme } from "react-native-paper";
@@ -9,9 +11,10 @@ import Animated from "react-native-reanimated";
 
 type PropsItem = {
     item: StyleItem
+    navigation: NativeStackNavigationProp<RootStackParamList, 'Tabs'>;
 }
 
-function Item({ item }: PropsItem) {
+function Item({ item, navigation}: PropsItem) {
     const maxImages = 5;
     const theme = useTheme();
     const styles = StyleSheet.create({
@@ -58,7 +61,7 @@ function Item({ item }: PropsItem) {
 
     return (
         <View style={styles.container}>
-            <ModalStyle visible={isVisble} onDismiss={() => setIsVisible(false)} item={item} />
+            <ModalStyle visible={isVisble} onDismiss={() => setIsVisible(false)} item={item} navigation={navigation} />
             <TouchableRipple
                 borderless
                 style={styles.ripple}
@@ -79,8 +82,11 @@ function Item({ item }: PropsItem) {
     )
 }
 
+type Props = {
+    navigation: NativeStackNavigationProp<RootStackParamList, 'Tabs'>;
+}
 
-export default function StylesHorizontal() {
+export default function StylesHorizontal({navigation}: Props) {
     const theme = useTheme();
     const styles = StyleSheet.create({
         container: {
@@ -114,7 +120,7 @@ export default function StylesHorizontal() {
             <Text style={styles.text}>We've compiled differnet art Styles for you to try, and you can upload your own styles also!</Text>
             <FlatList
                 data={data_styles}
-                renderItem={({ item }) => <Item item={item} />}
+                renderItem={({ item }) => <Item item={item} navigation={navigation} />}
                 keyExtractor={item => item.name}
                 horizontal={true}
             />

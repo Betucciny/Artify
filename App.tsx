@@ -27,14 +27,21 @@ export default function App() {
       ? darkTheme
       : lightTheme;
 
+  const options = {
+    headerTintColor: paperTheme.colors.background, 
+    statusBarColor: paperTheme.colors.background, 
+    headerStyle: {
+      backgroundColor: paperTheme.colors.background,
+    },
 
+  }
   
 
 
   return (
     <PaperProvider theme={paperTheme}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={options}>
           <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Tabs" component={TabController} options={{ headerShown: false }} />
           <Stack.Screen name="Generate" component={GenerateScreen} options={{ headerShown: false }} />

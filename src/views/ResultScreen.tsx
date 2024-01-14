@@ -7,7 +7,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import DialogGoBack from "@/components/DialogGoBack";
 import { createImage } from "@/utils/model";
 import { saveImageAsync, shareImage } from "@/utils/functions";
-import { shareAsync } from "expo-sharing";
 
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Result'>;

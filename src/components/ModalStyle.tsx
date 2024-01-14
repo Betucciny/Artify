@@ -1,20 +1,23 @@
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { getRandomInt, sleep } from "@utils/functions";
 import { StyleItem } from "@utils/styles";
+import { RootStackParamList } from "App";
 import { StyleSheet, View } from "react-native";
-import { Modal, Portal, Text, TouchableRipple, useTheme } from "react-native-paper"
+import { Modal, Portal, Text, TouchableRipple, useTheme, Button } from "react-native-paper"
 import Animated from "react-native-reanimated";
 
 type Props = {
     visible: boolean,
     onDismiss: () => void,
-    item: StyleItem
+    item: StyleItem,
+    navigation: NativeStackNavigationProp<RootStackParamList, 'Tabs'>;
 }
 
-export default function ModalStyle({ visible, onDismiss, item }: Props) {
+export default function ModalStyle({ visible, onDismiss, item, navigation }: Props) {
     const theme = useTheme();
     const styles = StyleSheet.create({
         ripple:{
-            height: "80%",
+            height: "85%",
             width: "90%",
             alignSelf: "center",
             borderRadius: 20,
@@ -66,6 +69,16 @@ export default function ModalStyle({ visible, onDismiss, item }: Props) {
                             style={styles.image}
                         />
                         <Text style={styles.text}>{item.description}</Text>
+                        <Button
+                            mode="contained"
+                            onPress={() => {
+                                onDismiss()
+                                navigation.navigate("Generate")
+                             }}
+                            style={{ borderRadius: 20, width: "90%", alignSelf: "center" }}
+                        >
+                            Go to Generate
+                        </Button>
                     </View>
                 </TouchableRipple>
             </Modal>
