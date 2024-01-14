@@ -1,18 +1,20 @@
-import GenerateImage from "@/components/GenerateImage";
+import DialogMissingImages from "@/components/DialogMissingImages";
 import ImageSelector from "@/components/ImageSelector";
 import ImageStyleSelector from "@/components/ImageStyleSelector";
 import SliderSimilarity from "@/components/SliderSimilarity";
 import ModalStyleSelection from "@components/ModalStyleSelection";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { data_styles } from "@utils/styles";
+import { RootStackParamList } from "App";
 import { Asset } from "expo-asset";
-import { ImageResult } from "expo-image-manipulator";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Button, Icon, useTheme } from "react-native-paper";
 
 
+type Props = NativeStackScreenProps<RootStackParamList, 'Generate'>;
 
-export default function GenerateScreen() {
+export default function GenerateScreen({navigation}: Props) {
     const styles_avariable = [...data_styles.map(style => style.name), "Personalized"];
     const [style, setStyle] = useState(styles_avariable[0]);
     const [isVisible, setIsVisible] = useState(false);
@@ -50,11 +52,7 @@ export default function GenerateScreen() {
     const [styleImage, setStyleImage] = useState<string | null>(null);
     const [image, setImage] = useState<string | null>(null);
     const [index, setIndex] = useState(0);
-    const [similarity, setSimilarity] = useState(0.5);
-    const [finalImage, setFinalImage] = useState<string | null>(null);
-    const [isGenerating, setIsGenerating] = useState(false);
-    const [isGenerated, setIsGenerated] = useState(false);
-
+    const [isDialogVisible, setIsDialogVisible] = useState(false);
 
     useEffect(() => {
         const loadInitialImage = async () => {
@@ -71,8 +69,23 @@ export default function GenerateScreen() {
     }, [style, index]);
 
 
+    const controlGenerate = () => {
+        if (styleImage === null || image === null) {
+            setIsDialogVisible(true);
+            return;
+        }
+        navigation.navigate('Result', {
+            styleImageUri: styleImage,
+            imageUri: image,
+        });
+    }
+
     return (
         <>
+            <DialogMissingImages
+                isVisible={isDialogVisible}
+                setIsVisible={setIsDialogVisible}
+            />
             <ModalStyleSelection
                 style={style}
                 setStyle={setStyle}
@@ -106,14 +119,13 @@ export default function GenerateScreen() {
                     </View>
                     <ImageSelector setImage={setImage} imageAsset={image} />
                 </View>
-                <SliderSimilarity similarity={similarity} setSimilarity={setSimilarity} />
-                <GenerateImage 
-                    styleImageUti={styleImage}
-                    imageUri={image}
-                    similarity={similarity}
-                    isVisible={isGenerated}
-                    setFinalImage={setFinalImage}
-                />
+                <Button
+                    onPress={controlGenerate}
+                    mode="elevated"
+                    style={styles.button}
+                >
+                    Generate
+                </Button>
             </ScrollView>
         </>
     )

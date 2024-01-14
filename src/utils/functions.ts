@@ -1,4 +1,6 @@
 import { Linking } from "react-native";
+import * as MediaLibrary from 'expo-media-library';
+import * as Sharing from 'expo-sharing';
 
 export function getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
@@ -95,4 +97,20 @@ export function getDimensions(width: number, height: number) {
         width: croppedWidth,
         height: croppedHeight,
     };
+}
+
+
+export async function saveImageAsync(uri: string) {
+    const asset = await MediaLibrary.createAssetAsync(uri);
+    const albums = await MediaLibrary.getAlbumsAsync();
+    const album = albums.find((album) => album.title === "Artify")
+    if (!album) {
+        await MediaLibrary.createAlbumAsync("Artify", asset, false);
+    } else {
+        await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
+    }
+}
+
+export async function shareImage(uri: string) {
+    await Sharing.shareAsync(uri,{dialogTitle:"Share your art"});
 }

@@ -66,13 +66,13 @@ const Footer = () => {
             <DialogFooter
                 visible={visibleFeedback}
                 onDismiss={controlFeedbackOnDismiss}
-                text={'Please send feedback to betohr48@gmail.com'}
+                text={'Please send feedback to herrerarr08@gmail.com'}
                 title={'Feedback'}
             />
             <DialogFooter
                 visible={visibleIssue}
                 onDismiss={controlIssueOnDismiss}
-                text={'Please report an issue to the github repository: https://github.com/Betucciny/AIapp'}
+                text={'Please report an issue to the github repository: https://github.com/Betucciny/Artify'}
                 title={'Issues'}
             />
             <View style={styles.feedbackSection}>

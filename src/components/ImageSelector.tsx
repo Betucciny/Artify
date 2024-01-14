@@ -66,11 +66,11 @@ export default function ImageSelector({ setImage, imageAsset }: Props) {
                 { crop: getDimensions(assetImage.width, assetImage.height) },
                 { resize: { width: 256, height: 256 } }
             ],
-            { compress: 1, format: SaveFormat.PNG }
+            { compress: 1, format: SaveFormat.JPEG }
         );
         setImage(imageResult.uri);
     }
-
+    console
     return (
         <View style={styles.container}>
             {imageAsset === null

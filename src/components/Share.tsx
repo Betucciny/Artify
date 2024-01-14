@@ -26,7 +26,7 @@ export default function Share() {
     })
 
     const share = (shareFunction: shareFunction) => {
-        return () => shareFunction("https://github.com/Betucciny/AIapp", "Check out this app!");
+        return () => shareFunction("https://github.com/Betucciny/Artify", "Check out this app!");
     }
     return (
         <View style={styles.mainContainer}>
@@ -42,17 +42,6 @@ export default function Share() {
                 >
                     Share with Facebook
                 </Button>
-                {/* <Button
-                    mode="contained"
-                    icon={"instagram"}
-                    onPress={share(postOnInstagram)}
-                    compact
-                    uppercase={false}
-                    style={styles.button}
-                    labelStyle={styles.button_text}
-                >
-                    Share with Instagram
-                </Button> */}
 
             </View>
             <View style={styles.container}>
