@@ -68,7 +68,7 @@ async function tensor2img(tensor: tf.Tensor<tf.Rank>) {
     const jpegImageData = jpeg.encode(rawImageData, 100);
     const imgBase64 = tf.util.decodeString(jpegImageData.data, "base64")
     const salt = `${Date.now()}-${Math.floor(Math.random() * 10000)}`
-    const uri = FileSystem.cacheDirectory + `tensor-${salt}.jpg`;
+    const uri = FileSystem.cacheDirectory + `artify-${salt}.jpg`;
     await FileSystem.writeAsStringAsync(uri, imgBase64, {
         encoding: FileSystem.EncodingType.Base64,
     });
@@ -84,9 +84,6 @@ export async function createImage(originalImageUri: string, styleImageUri: strin
             .loadGraphModel(bundleResourceIO(modelAssets.model, modelAssets.weights))
     }
     const model = await loadModel();
-    if (!model) {
-        return null;
-    }
     setProgress(0.2);
     const originalImageTensor = await img2tensor(originalImageUri);
     setProgress(0.4);

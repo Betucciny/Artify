@@ -1,8 +1,7 @@
-import { Asset } from "expo-asset";
 import { View, StyleSheet, Image, Text } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import * as ImagePicker from 'expo-image-picker';
-import { ImageResult, SaveFormat, manipulateAsync } from "expo-image-manipulator";
+import { SaveFormat, manipulateAsync } from "expo-image-manipulator";
 import { getDimensions } from "@/utils/functions";
 import { useState } from "react";
 import { data_styles } from "@/utils/styles";
