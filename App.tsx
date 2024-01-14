@@ -8,6 +8,7 @@ import TabController from '@/views/TabController';
 import GenerateScreen from '@/views/GenerateScreen';
 import ResultScreen from '@/views/ResultScreen';
 
+
 export type RootStackParamList = {
   Splash: undefined;
   Tabs: undefined;
@@ -28,13 +29,14 @@ export default function App() {
       : lightTheme;
 
   const options = {
-    headerTintColor: paperTheme.colors.background, 
-    statusBarColor: paperTheme.colors.background, 
+    headerTintColor: paperTheme.colors.background,
+    statusBarColor: paperTheme.colors.background,
     headerStyle: {
       backgroundColor: paperTheme.colors.background,
     },
 
   }
+
   
 
 

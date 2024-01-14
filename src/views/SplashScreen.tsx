@@ -4,7 +4,10 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Button, useTheme } from "react-native-paper";
 import Animated from "react-native-reanimated";
 import * as MediaLibrary from 'expo-media-library';
-import { Asset } from 'expo-asset'; 
+import { useEffect } from "react";
+import * as FileSystem from 'expo-file-system';
+import { Asset } from "expo-asset";
+import { modelAssets } from "@/utils/model";
 
 
 type Props = {
