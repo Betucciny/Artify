@@ -1,14 +1,14 @@
 import DialogMissingImages from "@/components/DialogMissingImages";
 import ImageSelector from "@/components/ImageSelector";
 import ImageStyleSelector from "@/components/ImageStyleSelector";
-import SliderSimilarity from "@/components/SliderSimilarity";
 import ModalStyleSelection from "@components/ModalStyleSelection";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { data_styles } from "@utils/styles";
+import { data_styles, data_styles_local } from "@utils/styles";
 import { RootStackParamList } from "App";
 import { Asset } from "expo-asset";
+import { SaveFormat, manipulateAsync } from "expo-image-manipulator";
 import { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
 import { Button, Icon, useTheme } from "react-native-paper";
 
 
@@ -56,14 +56,13 @@ export default function GenerateScreen({navigation}: Props) {
 
     useEffect(() => {
         const loadInitialImage = async () => {
-            const asset = data_styles.find(styleA => styleA.name === style);
+            const asset = data_styles_local.find(styleA => styleA.name === style);
             if (asset === undefined) {
                 setStyleImage(null);
                 return;
             }
-            const assetImage = Asset.fromModule(asset.images[index]);
-            await assetImage.downloadAsync();
-            setStyleImage(assetImage.localUri);
+            console.log(asset.images[index]);
+            setStyleImage(asset.images[index]);
         }
         loadInitialImage();
     }, [style, index]);
@@ -74,6 +73,7 @@ export default function GenerateScreen({navigation}: Props) {
             setIsDialogVisible(true);
             return;
         }
+        alert("We recommend using wifi to generate the image, the model is very heavy and can consume a lot of data")
         navigation.navigate('Result', {
             styleImageUri: styleImage,
             imageUri: image,

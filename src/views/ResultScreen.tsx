@@ -102,6 +102,8 @@ export default function ResultScreen({ navigation, route }: Props) {
         const getImage = async () => {
             const resultImageUri = await createImage(imageUri, styleImageUri, setProgress);
             if (resultImageUri === null || resultImageUri === undefined || resultImageUri === '') {
+                navigation.goBack();
+                alert("Error creating image");
                 return;
             }
             setIsLoaded(true);

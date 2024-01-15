@@ -1,4 +1,13 @@
-export const data_styles = [
+import { ImageSourcePropType } from "react-native";
+import * as FileSystem from 'expo-file-system';
+
+type Style = {
+    name: string;
+    images: ImageSourcePropType[];
+    description: string;
+}
+
+export const data_styles: Style[] = [
     {
         name: "Academic Art",
         images: [
@@ -129,7 +138,8 @@ export const data_styles = [
             require("@assets/Styles/Symbolism/3.jpg"),
             require("@assets/Styles/Symbolism/4.jpg"),
         ],
-        description: "Symbolism was a late nineteenth-century art movement of French, Russian and Belgian origin in poetry and other arts seeking to represent absolute truths symbolically through metaphorical images."    },
+        description: "Symbolism was a late nineteenth-century art movement of French, Russian and Belgian origin in poetry and other arts seeking to represent absolute truths symbolically through metaphorical images."    
+    },
     {
         name: "Western Medieval Art",
         images: [
@@ -139,7 +149,279 @@ export const data_styles = [
             require("@assets/Styles/Western_Medieval/3.jpg"),
             require("@assets/Styles/Western_Medieval/4.jpg"),
         ],
-        description: "The medieval art of the Western world covers a vast scope of time and place, over 1000 years of art in Europe, and at times the Middle East and North Africa. "    }
+        description: "The medieval art of the Western world covers a vast scope of time and place, over 1000 years of art in Europe, and at times the Middle East and North Africa. "    
+    }
 ];
 
-export type StyleItem = typeof data_styles[0];
+type StyleUrl = {
+    name: string;
+    images: string[];
+}
+
+export const data_styles_internet: StyleUrl[] = [
+    {
+        name: "Academic_Art",
+        images: [
+            "https://storage.googleapis.com/artifym/Styles/Academic_Art/0.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Academic_Art/1.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Academic_Art/2.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Academic_Art/3.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Academic_Art/4.jpg",
+        ],
+    },
+    {
+        name: "Art_Nouveau",
+        images: [
+            "https://storage.googleapis.com/artifym/Styles/Art_Nouveau/0.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Art_Nouveau/1.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Art_Nouveau/2.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Art_Nouveau/3.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Art_Nouveau/4.jpg",
+        ],
+    },
+    {
+        name: "Baroque",
+        images: [
+            "https://storage.googleapis.com/artifym/Styles/Baroque/0.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Baroque/1.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Baroque/2.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Baroque/3.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Baroque/4.jpg",
+        ],
+    },
+    {
+        name: "Expressionism",
+        images: [
+            "https://storage.googleapis.com/artifym/Styles/Expressionism/0.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Expressionism/1.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Expressionism/2.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Expressionism/3.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Expressionism/4.jpg",
+        ],
+    },
+    {
+        name: "Japanaese_Art",
+        images: [
+            "https://storage.googleapis.com/artifym/Styles/Japanese_Art/0.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Japanese_Art/1.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Japanese_Art/2.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Japanese_Art/3.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Japanese_Art/4.jpg",
+        ],
+    },
+    {
+        name: "Neo_Classicism",
+        images: [
+            "https://storage.googleapis.com/artifym/Styles/Neoclassicism/0.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Neoclassicism/1.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Neoclassicism/2.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Neoclassicism/3.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Neoclassicism/4.jpg",
+        ],
+    },
+    {
+        name: "Primitivism",
+        images: [
+            "https://storage.googleapis.com/artifym/Styles/Primitivism/0.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Primitivism/1.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Primitivism/2.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Primitivism/3.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Primitivism/4.jpg",
+        ],
+    },
+    {
+        name: "Realism",
+        images: [
+            "https://storage.googleapis.com/artifym/Styles/Realism/0.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Realism/1.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Realism/2.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Realism/3.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Realism/4.jpg",
+        ],
+    },
+    {
+        name: "Renaissance",
+        images: [
+            "https://storage.googleapis.com/artifym/Styles/Renaissance/0.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Renaissance/1.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Renaissance/2.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Renaissance/3.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Renaissance/4.jpg",
+        ],
+    },
+    {
+        name: "Rococo",
+        images: [
+            "https://storage.googleapis.com/artifym/Styles/Rococo/0.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Rococo/1.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Rococo/2.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Rococo/3.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Rococo/4.jpg",
+        ],
+    },
+    {
+        name: "Romanticism",
+        images: [
+            "https://storage.googleapis.com/artifym/Styles/Romanticism/0.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Romanticism/1.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Romanticism/2.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Romanticism/3.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Romanticism/4.jpg",
+        ],
+    },
+    {
+        name: "Symbolism",
+        images: [
+            "https://storage.googleapis.com/artifym/Styles/Symbolism/0.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Symbolism/1.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Symbolism/2.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Symbolism/3.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Symbolism/4.jpg",
+        ],
+    },
+    {
+        name: "Western_Medieval_Art",
+        images: [
+            "https://storage.googleapis.com/artifym/Styles/Western_Medieval/0.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Western_Medieval/1.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Western_Medieval/2.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Western_Medieval/3.jpg",
+            "https://storage.googleapis.com/artifym/Styles/Western_Medieval/4.jpg",
+
+        ],
+    }
+];
+
+export const data_styles_local: StyleUrl[] = [
+    {
+        name: "Academic Art",
+        images: [
+            FileSystem.documentDirectory + "Styles/Academic_Art/0.jpg",
+            FileSystem.documentDirectory + "Styles/Academic_Art/1.jpg",
+            FileSystem.documentDirectory + "Styles/Academic_Art/2.jpg",
+            FileSystem.documentDirectory + "Styles/Academic_Art/3.jpg",
+            FileSystem.documentDirectory + "Styles/Academic_Art/4.jpg",
+        ],
+    },
+    {
+        name: "Art Nouveau",
+        images: [
+            FileSystem.documentDirectory + "Styles/Art_Nouveau/0.jpg",
+            FileSystem.documentDirectory + "Styles/Art_Nouveau/1.jpg",
+            FileSystem.documentDirectory + "Styles/Art_Nouveau/2.jpg",
+            FileSystem.documentDirectory + "Styles/Art_Nouveau/3.jpg",
+            FileSystem.documentDirectory + "Styles/Art_Nouveau/4.jpg",
+        ],
+    },
+    {
+        name: "Baroque",
+        images: [
+            FileSystem.documentDirectory + "Styles/Baroque/0.jpg",
+            FileSystem.documentDirectory + "Styles/Baroque/1.jpg",
+            FileSystem.documentDirectory + "Styles/Baroque/2.jpg",
+            FileSystem.documentDirectory + "Styles/Baroque/3.jpg",
+            FileSystem.documentDirectory + "Styles/Baroque/4.jpg",
+        ],
+    },
+    {
+        name: "Expressionism",
+        images: [
+            FileSystem.documentDirectory + "Styles/Expressionism/0.jpg",
+            FileSystem.documentDirectory + "Styles/Expressionism/1.jpg",
+            FileSystem.documentDirectory + "Styles/Expressionism/2.jpg",
+            FileSystem.documentDirectory + "Styles/Expressionism/3.jpg",
+            FileSystem.documentDirectory + "Styles/Expressionism/4.jpg",
+        ],
+    },
+    {
+        name: "Japanaese Art",
+        images: [
+            FileSystem.documentDirectory + "Styles/Japanese_Art/0.jpg",
+            FileSystem.documentDirectory + "Styles/Japanese_Art/1.jpg",
+            FileSystem.documentDirectory + "Styles/Japanese_Art/2.jpg",
+            FileSystem.documentDirectory + "Styles/Japanese_Art/3.jpg",
+            FileSystem.documentDirectory + "Styles/Japanese_Art/4.jpg",
+        ],
+    },
+    {
+        name: "Neo Classicism",
+        images: [
+            FileSystem.documentDirectory + "Styles/Neoclassicism/0.jpg",
+            FileSystem.documentDirectory + "Styles/Neoclassicism/1.jpg",
+            FileSystem.documentDirectory + "Styles/Neoclassicism/2.jpg",
+            FileSystem.documentDirectory + "Styles/Neoclassicism/3.jpg",
+            FileSystem.documentDirectory + "Styles/Neoclassicism/4.jpg",
+        ],
+    },
+    {
+        name: "Primitivism",
+        images: [
+            FileSystem.documentDirectory + "Styles/Primitivism/0.jpg",
+            FileSystem.documentDirectory + "Styles/Primitivism/1.jpg",
+            FileSystem.documentDirectory + "Styles/Primitivism/2.jpg",
+            FileSystem.documentDirectory + "Styles/Primitivism/3.jpg",
+            FileSystem.documentDirectory + "Styles/Primitivism/4.jpg",
+        ],
+    },
+    {
+        name: "Realism",
+        images: [
+            FileSystem.documentDirectory + "Styles/Realism/0.jpg",
+            FileSystem.documentDirectory + "Styles/Realism/1.jpg",
+            FileSystem.documentDirectory + "Styles/Realism/2.jpg",
+            FileSystem.documentDirectory + "Styles/Realism/3.jpg",
+            FileSystem.documentDirectory + "Styles/Realism/4.jpg",
+        ],
+    },
+    {
+        name: "Renaissance",
+        images: [
+            FileSystem.documentDirectory + "Styles/Renaissance/0.jpg",
+            FileSystem.documentDirectory + "Styles/Renaissance/1.jpg",
+            FileSystem.documentDirectory + "Styles/Renaissance/2.jpg",
+            FileSystem.documentDirectory + "Styles/Renaissance/3.jpg",
+            FileSystem.documentDirectory + "Styles/Renaissance/4.jpg",
+        ],
+    },
+    {
+        name: "Rococo",
+        images: [
+            FileSystem.documentDirectory + "Styles/Rococo/0.jpg",
+            FileSystem.documentDirectory + "Styles/Rococo/1.jpg",
+            FileSystem.documentDirectory + "Styles/Rococo/2.jpg",
+            FileSystem.documentDirectory + "Styles/Rococo/3.jpg",
+            FileSystem.documentDirectory + "Styles/Rococo/4.jpg",
+        ],
+    },
+    {
+        name: "Romanticism",
+        images: [
+            FileSystem.documentDirectory + "Styles/Romanticism/0.jpg",
+            FileSystem.documentDirectory + "Styles/Romanticism/1.jpg",
+            FileSystem.documentDirectory + "Styles/Romanticism/2.jpg",
+            FileSystem.documentDirectory + "Styles/Romanticism/3.jpg",
+            FileSystem.documentDirectory + "Styles/Romanticism/4.jpg",
+        ],
+    },
+    {
+        name: "Symbolism",
+        images: [
+            FileSystem.documentDirectory + "Styles/Symbolism/0.jpg",
+            FileSystem.documentDirectory + "Styles/Symbolism/1.jpg",
+            FileSystem.documentDirectory + "Styles/Symbolism/2.jpg",
+            FileSystem.documentDirectory + "Styles/Symbolism/3.jpg",
+            FileSystem.documentDirectory + "Styles/Symbolism/4.jpg",
+        ],
+    },
+    {
+        name: "Western Medieval Art",
+        images: [
+            FileSystem.documentDirectory + "Styles/Western_Medieval_Art/0.jpg",
+            FileSystem.documentDirectory + "Styles/Western_Medieval_Art/1.jpg",
+            FileSystem.documentDirectory + "Styles/Western_Medieval_Art/2.jpg",
+            FileSystem.documentDirectory + "Styles/Western_Medieval_Art/3.jpg",
+            FileSystem.documentDirectory + "Styles/Western_Medieval_Art/4.jpg",
+
+        ],
+    }
+];

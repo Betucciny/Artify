@@ -1,5 +1,6 @@
 import { Linking } from "react-native";
 import * as MediaLibrary from 'expo-media-library';
+import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 
 export function getRandomInt(max: number) {
@@ -112,5 +113,8 @@ export async function saveImageAsync(uri: string) {
 }
 
 export async function shareImage(uri: string) {
-    await Sharing.shareAsync(uri,{dialogTitle:"Share your art"});
+    await Sharing.shareAsync(uri, { dialogTitle: "Share your art" });
 }
+
+const androidDrawableResPath = FileSystem.bundledAssets
+export const getAndroidReleaseImageURI = (sourceURI: string) => `${androidDrawableResPath}/${sourceURI}.jpg`;

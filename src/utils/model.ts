@@ -16,7 +16,7 @@ async function img2tensor(imgUri: string) {
     const resizedImg = tf.image.resizeBilinear(decodedImg, [256, 256]);
     const expandedImg = resizedImg.expandDims(0);
     return expandedImg.div(255.0);
-    
+
 }
 
 async function tensor2img(tensor: tf.Tensor<tf.Rank>) {
@@ -55,17 +55,24 @@ export async function createImage(originalImageUri: string, styleImageUri: strin
         return await tf
             .loadGraphModel("https://storage.googleapis.com/artifym/model/model.json")
     }
-    const model = await loadModel();
-    setProgress(0.2);
-    const originalImageTensor = await img2tensor(originalImageUri);
-    setProgress(0.4);
-    const styleImageTensor = await img2tensor(styleImageUri);
-    setProgress(0.6);
-    const result = model.predict([originalImageTensor, styleImageTensor]);
-    setProgress(0.8);
-    const resultImageUri = await tensor2img(result as tf.Tensor<tf.Rank>);
-    model.dispose();
-    setProgress(1);
-    return resultImageUri;
+    try {
+        const model = await loadModel();
+        setProgress(0.2);
+        const originalImageTensor = await img2tensor(originalImageUri);
+        setProgress(0.4);
+        const styleImageTensor = await img2tensor(styleImageUri);
+        setProgress(0.6);
+        const result = model.predict([originalImageTensor, styleImageTensor]);
+        setProgress(0.8);
+        const resultImageUri = await tensor2img(result as tf.Tensor<tf.Rank>);
+        model.dispose();
+        setProgress(1);
+        return resultImageUri;
+    } catch (error) {
+        setProgress(1);
+        console.log(error);
+        return null;
+    }
+    
 }
 

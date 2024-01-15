@@ -4,10 +4,10 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Button, useTheme } from "react-native-paper";
 import Animated from "react-native-reanimated";
 import * as MediaLibrary from 'expo-media-library';
-import { useEffect } from "react";
 import * as FileSystem from 'expo-file-system';
-import { Asset } from "expo-asset";
-import { modelAssets } from "@/utils/model";
+import { useEffect, useState } from "react";
+import { data_styles_internet } from "@/utils/styles";
+
 
 
 type Props = {
@@ -51,6 +51,7 @@ export default function SplashScreen({ navigation }: Props) {
     })
 
     const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
+    const [imageDownloaded, setImageDownloaded] = useState(false);
 
     const controlOnPress = async () => {
         requestPermission().then(() => {
@@ -58,12 +59,34 @@ export default function SplashScreen({ navigation }: Props) {
                 return;
             }
             if (permissionResponse.granted) {
-                navigation.navigate('Tabs');
+                if (imageDownloaded){
+                    navigation.navigate('Tabs');
+                }else{
+                    alert("Please wait until the images are downloaded or verify your internet connection");
+                }
             }
         }).catch((e) => {
             console.log(e);
         })
     }
+
+    useEffect(() => {
+        const loadImages = async () => {
+            const info = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'Styles');
+            if (!info.exists) {
+                await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'Styles');
+                for(const style of data_styles_internet){
+                    await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'Styles/' + style.name);
+                    for(const [index, image] of style.images.entries()){
+                        await FileSystem.downloadAsync(image, FileSystem.documentDirectory + 'Styles/' + style.name + '/' + index + '.jpg');
+                    }
+                }
+            }
+            setImageDownloaded(true);
+        }
+        loadImages();
+    }, []);
+
 
     return (
         <View style={styles.container_global}>

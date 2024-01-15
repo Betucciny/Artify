@@ -21,13 +21,7 @@ export default function HomeScreen({ navigation }: Props) {
             backgroundColor: theme.colors.background,
         },
     }
-    useEffect(() => {
-        const check = async () => {
-            const info =  await FileSystem.getInfoAsync(FileSystem.cacheDirectory || '');
-            console.log(info);
-        }
-        check();
-    }, [])
+    
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
