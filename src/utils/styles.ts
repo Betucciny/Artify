@@ -200,7 +200,7 @@ export const data_styles_internet: StyleUrl[] = [
         ],
     },
     {
-        name: "Japanaese_Art",
+        name: "Japanese_Art",
         images: [
             "https://storage.googleapis.com/artifym/Styles/Japanese_Art/0.jpg",
             "https://storage.googleapis.com/artifym/Styles/Japanese_Art/1.jpg",
@@ -210,7 +210,7 @@ export const data_styles_internet: StyleUrl[] = [
         ],
     },
     {
-        name: "Neo_Classicism",
+        name: "Neoclassicism",
         images: [
             "https://storage.googleapis.com/artifym/Styles/Neoclassicism/0.jpg",
             "https://storage.googleapis.com/artifym/Styles/Neoclassicism/1.jpg",
