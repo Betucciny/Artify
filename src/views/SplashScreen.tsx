@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { RootStackParamList } from "App"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Button, useTheme } from "react-native-paper";
@@ -59,9 +59,9 @@ export default function SplashScreen({ navigation }: Props) {
                 return;
             }
             if (permissionResponse.granted) {
-                if (imageDownloaded){
+                if (imageDownloaded) {
                     navigation.navigate('Tabs');
-                }else{
+                } else {
                     alert("Please wait until the images are downloaded or verify your internet connection");
                 }
             }
@@ -76,25 +76,25 @@ export default function SplashScreen({ navigation }: Props) {
             if (!info.exists) {
                 const promiseArray: Promise<void>[] = [];
                 await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'Styles');
-                for(const style of data_styles_internet){
+                for (const style of data_styles_internet) {
                     promiseArray.push(FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'Styles/' + style.name))
                 }
-                try{
+                try {
                     await Promise.all(promiseArray);
-                }catch(e){
+                } catch (e) {
                     await FileSystem.deleteAsync(FileSystem.documentDirectory + 'Styles');
                     await loadImages();
                     return
                 }
                 const promisesImages = [];
-                for(const style of data_styles_internet){
-                    for(const [index, image] of style.images.entries()){
-                        promisesImages.push( FileSystem.downloadAsync(image, FileSystem.documentDirectory + 'Styles/' + style.name + '/' + index + '.jpg'));
+                for (const style of data_styles_internet) {
+                    for (const [index, image] of style.images.entries()) {
+                        promisesImages.push(FileSystem.downloadAsync(image, FileSystem.documentDirectory + 'Styles/' + style.name + '/' + index + '.jpg'));
                     }
                 }
-                try{
+                try {
                     await Promise.all(promisesImages);
-                } catch(e){
+                } catch (e) {
                     await FileSystem.deleteAsync(FileSystem.documentDirectory + 'Styles');
                     await loadImages();
                     return
@@ -122,13 +122,19 @@ export default function SplashScreen({ navigation }: Props) {
                 </Text>
             </View>
             <View style={styles.sub_container}>
-                <Button
-                    onPress={controlOnPress}
-                    mode="contained"
-                    icon="arrow-right"
-                >
-                    Start
-                </Button>
+                {imageDownloaded
+                    ? <Button
+                        onPress={controlOnPress}
+                        mode="contained"
+                        icon="arrow-right"
+                    >
+                        Start
+                    </Button>
+                    : <ActivityIndicator
+                        animating={true}
+                        color={theme.colors.primary}
+                    />
+                }
             </View>
         </View>
     )
