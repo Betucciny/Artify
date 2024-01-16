@@ -1,10 +1,11 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "App";
 import { useEffect, useState } from "react";
-import { Image, StyleSheet, View, FlatList } from "react-native";
+import { Image, StyleSheet, View, FlatList, Pressable } from "react-native";
 import { Text, useTheme, Button } from "react-native-paper";
 import * as MediaLibrary from 'expo-media-library';
 import * as ImagePicker from 'expo-image-picker';
+import { shareImage } from "@/utils/functions";
 
 type Props = {
     navigation: NativeStackNavigationProp<RootStackParamList, 'Tabs'>;
@@ -63,8 +64,9 @@ export default function Gallery({ navigation }: Props) {
             borderRadius: 10,
             borderColor: theme.colors.primary,
             borderWidth: 2,
-            width: 200,
-            height: 200,
+            width: "100%",
+            aspectRatio: 1,
+            // height: "100%",
         },
         button: {
             margin: 10,
@@ -89,9 +91,11 @@ export default function Gallery({ navigation }: Props) {
             <FlatList
                 data={images}
                 renderItem={({ item }) => (
-                    <View style={styles.image_container}>
+                    <Pressable style={styles.image_container} onPress={async () => {
+                        await shareImage(item);
+                    }}>
                         <Image source={{ uri: item }} style={styles.image} />
-                    </View>
+                    </Pressable>
                 )}
                 keyExtractor={(_, index) => index.toString()}
                 numColumns={2}

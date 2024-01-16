@@ -74,12 +74,30 @@ export default function SplashScreen({ navigation }: Props) {
         const loadImages = async () => {
             const info = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'Styles');
             if (!info.exists) {
+                const promiseArray: Promise<void>[] = [];
                 await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'Styles');
                 for(const style of data_styles_internet){
-                    await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'Styles/' + style.name);
+                    promiseArray.push(FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'Styles/' + style.name))
+                }
+                try{
+                    await Promise.all(promiseArray);
+                }catch(e){
+                    await FileSystem.deleteAsync(FileSystem.documentDirectory + 'Styles');
+                    await loadImages();
+                    return
+                }
+                const promisesImages = [];
+                for(const style of data_styles_internet){
                     for(const [index, image] of style.images.entries()){
-                        await FileSystem.downloadAsync(image, FileSystem.documentDirectory + 'Styles/' + style.name + '/' + index + '.jpg');
+                        promisesImages.push( FileSystem.downloadAsync(image, FileSystem.documentDirectory + 'Styles/' + style.name + '/' + index + '.jpg'));
                     }
+                }
+                try{
+                    await Promise.all(promisesImages);
+                } catch(e){
+                    await FileSystem.deleteAsync(FileSystem.documentDirectory + 'Styles');
+                    await loadImages();
+                    return
                 }
             }
             setImageDownloaded(true);
