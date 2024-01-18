@@ -7,6 +7,7 @@ import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
 import { useEffect, useState } from "react";
 import { data_styles_internet } from "@/utils/styles";
+import { data_model } from "@/utils/model";
 
 
 
@@ -96,6 +97,20 @@ export default function SplashScreen({ navigation }: Props) {
                     await Promise.all(promisesImages);
                 } catch (e) {
                     await FileSystem.deleteAsync(FileSystem.documentDirectory + 'Styles');
+                    await loadImages();
+                    return
+                }
+                await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'Model');
+                const promiseArrayModel = [];
+                promiseArrayModel.push(FileSystem.downloadAsync(data_model.model[1], FileSystem.documentDirectory + 'Model/' + data_model.model[0]));
+                for (const [name, uri] of data_model.weights) {
+                    promiseArrayModel.push(FileSystem.downloadAsync(uri, FileSystem.documentDirectory + 'Model/' + name + '.jpg'));
+                }
+                try {
+                    await Promise.all(promiseArrayModel);
+                } catch (e) {
+                    await FileSystem.deleteAsync(FileSystem.documentDirectory + 'Styles');
+                    await FileSystem.deleteAsync(FileSystem.documentDirectory + 'Model');
                     await loadImages();
                     return
                 }
